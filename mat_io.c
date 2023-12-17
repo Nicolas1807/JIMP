@@ -16,9 +16,9 @@ Matrix * readFromFile(char * fname) {
 					fscanf(fin,"%d %d",&r,&c);
 					mat = createMatrix(r,c);
 					if (mat != NULL) {
-						for (ir = 0; ir < r; ir++) 
-							for (ic = 0; ic < c; ic++)
-								fscanf(fin, "%lf",&(mat->data[ir][ic]));
+						for (ic = 0; ic < r; ic++) 
+							for (ir = 0; ir < c; ir++)
+								fscanf(fin, "%lf",&(mat->data[ic][ir]));
 					} else {
 								fprintf(stderr,"Wystąpił problem podczas tworzenia macierzy o rozmiarach %d x %d dla danych z pliku: %s\n", r, c, fname);
 					}

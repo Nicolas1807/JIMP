@@ -13,19 +13,21 @@ int main(int argc, char ** argv) {
 
 	if (A == NULL) return -1;
 	if (b == NULL) return -2;
-	printToScreen(A);
-	printToScreen(b);
+	
 
 	x = createMatrix(b->r, 1);
 	res = eliminate(A,b);
-	if (x != NULL) {
-		//res = backsubst(x,A,b);
+	printToScreen(A);
+	printToScreen(b);
+	
+	// if (x != NULL) {
+	// 	//res = backsubst(x,A,b);
 
-		printToScreen(x);
-	  freeMatrix(x);
-	} else {
-					fprintf(stderr,"Błąd! Nie mogłem utworzyć wektora wynikowego x.\n");
-	}
+	// 	printToScreen(x);
+	//   freeMatrix(x);
+	// } else {
+	// 				fprintf(stderr,"Błąd! Nie mogłem utworzyć wektora wynikowego x.\n");
+	// }
 
 	freeMatrix(A);
 	freeMatrix(b);
