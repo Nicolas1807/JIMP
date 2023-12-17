@@ -19,7 +19,7 @@ int main(int argc, char ** argv) {
 	x = createMatrix(b->r, 1);
 	res = eliminate(A,b);
 	if (x != NULL) {
-		//res = backsubst(x,A,b);
+		res = backsubst(x,A,b);
 
 		printToScreen(x);
 	  freeMatrix(x);
