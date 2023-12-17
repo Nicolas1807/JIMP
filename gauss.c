@@ -1,6 +1,7 @@
 #include "gauss.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 /**
  * Zwraca 0 - elimnacja zakonczona sukcesem
  * Zwraca 1 - macierz osobliwa - dzielenie przez 0
@@ -25,6 +26,7 @@ int eliminate(Matrix *mat, Matrix *b){
         }
 
         double *tmp = (double*)malloc(sizeof(*tmp)*r);
+        double t;
 
         for(i = 0; i<r-1;i++){
 
@@ -32,9 +34,9 @@ int eliminate(Matrix *mat, Matrix *b){
             int max_index = 0;
 
             for(k = i; k<r;k++){
-                if(mat->data[i][k]>max)
+                if(fabs(mat->data[k][i])>max)
                 {
-                    max = mat->data[i][k];
+                    max = mat->data[k][i];
                     max_index = k;
                 }
             }
@@ -42,29 +44,39 @@ int eliminate(Matrix *mat, Matrix *b){
             if(max_index != i)
             {
                 int z;
+                
+                t = b->data[i][0];
+                b->data[i][0] = b->data[max_index][0];
+                b->data[max_index][0] = t;
+
                 for(z = 0; z<r; z++)
                 {
-                    tmp[z] = mat->data[z][i];
+                    tmp[z] = mat->data[i][z];
+                    
                 }
                 for(z = 0; z<r; z++)
                 {
-                    mat->data[z][i] = mat->data[z][max_index];
+                    mat->data[i][z] = mat->data[max_index][z];
+
                 }
 
                 for(z = 0; z<r; z++)
                 {
-                    mat->data[z][max_index] = tmp[z];
+                    mat->data[max_index][z] = tmp[z];
                 }
 
 
             }
 
             for(j=i+1; j<r; j++){
-                wspolczynnik = mat->data[i][j] / mat->data[i][i];
+                wspolczynnik = mat->data[j][i] / mat->data[i][i];
                 for(k = i; k<r;k++)
-                    mat->data[k][j] -= wspolczynnik * mat->data[k][i];
+                {
+                    mat->data[j][k] -= wspolczynnik * mat->data[i][k];  
+                }
+                b->data[j][0] -= wspolczynnik * b->data[i][0];
             }
-            b->data[j][0] -= wspolczynnik * b->data[i][0];
+            
         }
 		free(tmp);
         return 0;
